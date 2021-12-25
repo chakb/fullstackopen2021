@@ -6,6 +6,15 @@ const Button = ({ handleClick, text }) => {
   )
 }
 
+const DisplayAnecdote = ({ anecdote, votes }) => {
+  return (
+    <div>
+      <p>{anecdote}</p>
+      <p>has {votes} votes</p>
+    </div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -24,6 +33,7 @@ const App = () => {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  // same anecdote could be selected again
   const randomAnecdote = () => setSelected(getRndInteger(0, anecdotes.length))
 
   const vote = () => {
@@ -32,12 +42,16 @@ const App = () => {
     setVotes(newVotes)
   }
 
+  const maxVotes = Math.max(...votes)
+
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes</p>
+      <h1>Anecdote of the day</h1>
+      <DisplayAnecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <Button handleClick={vote} text='vote' />
       <Button handleClick={randomAnecdote} text='next anecdote' />
+      <h1>Anecdote with most votes</h1>
+      <DisplayAnecdote anecdote={anecdotes[votes.indexOf(maxVotes)]} votes={maxVotes} />
     </div>
   )
 }
