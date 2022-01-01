@@ -1,25 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
+import DisplayCountryInfo from "./components/DisplayCountryInfo";
 
-const CountryInfo = ({ country }) => {
-  return (
-    <div>
-      <h2>{country.name.common}</h2>
-      <div>capital {country.capital[0]}</div>
-      <div>population {country.population}</div>
-      <h3>languages</h3>
-      <ul>
-        {Object.values(country.languages).map(language => <li>{language}</li>)}
-      </ul>
-      <img src={country.flags.png} alt={`${country.name.common} flag`} />
-    </div>
-  )
-}
+const DisplayCountrySearch = ({ countries, handleCountryClick }) => {
 
-const DisplayCountrySearch = ({ countries }) => {
-
-  if (countries.length === 1) {
-    return <CountryInfo country={countries[0]} />
+  if (countries.length === 0) {
+    return null
+  }
+  else if (countries.length === 1) {
+    return <DisplayCountryInfo country={countries[0]} />
   }
   else if (countries.length > 10) {
     return <div>Too many matches, specify another filter</div>
@@ -30,17 +19,17 @@ const DisplayCountrySearch = ({ countries }) => {
         {countries.map(country =>
           <div key={country.name.common}>
             {country.name.common}
+            <button onClick={handleCountryClick} value={country.name.common}>show</button>
           </div>
         )}
       </div>
     )
   }
-
 }
 
 function App() {
   const [countries, setCountries] = useState([])
-  const [countryFilter, setcountryFilter] = useState('')
+  const [countryFilter, setCountryFilter] = useState('')
 
   useEffect(() => {
     axios
@@ -50,14 +39,21 @@ function App() {
       )
   }, [])
 
+  const handleCountryClick = (event) => {
+    setCountryFilter(event.target.value)
+  }
+
   const countriesToShow = countryFilter === ''
     ? []
     : countries.filter(country => country.name.common.toLowerCase().includes(countryFilter.toLowerCase()))
 
   return (
     <div>
-      find countries <input value={countryFilter} onChange={(event) => setcountryFilter(event.target.value)} />
-      <DisplayCountrySearch countries={countriesToShow} />
+      find countries <input value={countryFilter} onChange={(event) => setCountryFilter(event.target.value)} />
+      <DisplayCountrySearch
+        countries={countriesToShow}
+        handleCountryClick={handleCountryClick}
+      />
     </div>
   );
 }
