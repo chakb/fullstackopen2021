@@ -42,11 +42,24 @@ const Persons = ({ persons, handleDeletePerson }) => {
   )
 }
 
+const Notification = ({ message }) => {
+  if (message.text === null) {
+    return null
+  }
+
+  return (
+    <div className={message.className}>
+      {message.text}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState({ text: null, className: null })
 
   useEffect(() => {
     personService.getAll()
@@ -66,7 +79,7 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    
+
     const personFound = persons.find(person => person.name === newName)
 
     if (personFound) {
@@ -78,7 +91,13 @@ const App = () => {
             setPersons(persons.map(person => person.id === personFound.id ? returnedPerson : person))
           })
           .catch(error => {
-            alert(`${personFound.name} was already deleted from the server`)
+            setNotificationMessage({
+              text: `Information of ${personFound.name} has already been removed from the server`,
+              className: 'error'
+            })
+            setTimeout(() => {
+              setNotificationMessage({ ...notificationMessage, text: null })
+            }, 5000);
             setPersons(persons.filter(person => person.id !== personFound.id))
           })
       }
@@ -95,22 +114,34 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+        .then(() => {
+          setNotificationMessage({ text: `Added ${personObject.name}`, className: 'success' })
+          setTimeout(() => {
+            setNotificationMessage({ ...notificationMessage, text: null })
+          }, 5000);
+
+        })
     }
   }
 
   const handleDeletePerson = (event) => {
     const idToDelete = parseInt(event.target.value)
+    const personToDelete = persons.find(person => person.id === idToDelete)
     const personsRemaining = persons.filter(person => person.id !== idToDelete)
 
-    if (window.confirm(`Delete ${persons.find(person => person.id === idToDelete).name}?`)) {
+    if (window.confirm(`Delete ${personToDelete.name}?`)) {
       personService
         .remove(event.target.value)
         .then(() =>
           setPersons(personsRemaining))
         .catch(error => {
-          alert(
-            `${persons.find(person => person.id === idToDelete).name} was already deleted from server`
-          )
+          setNotificationMessage({
+            text: `Information of ${personToDelete.name} has already been removed from the server`,
+            className: 'error'
+          })
+          setTimeout(() => {
+            setNotificationMessage({ ...notificationMessage, text: null })
+          }, 5000);
           setPersons(personsRemaining)
         })
     }
@@ -123,6 +154,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={notificationMessage} />
       <Filter
         filter={filter}
         handleFilterChange={handleFilterChange}
