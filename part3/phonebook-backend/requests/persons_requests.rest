@@ -1,0 +1,46 @@
+GET http://localhost:3001/api/persons
+
+###
+GET http://localhost:3001/api/persons/3
+
+###
+GET http://localhost:3001/info
+
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Caracoles",
+    "number": "12345678"
+}
+
+###
+PUT http://localhost:3001/api/persons/61d9e742b45a938c4c6b323c
+content-type: application/json
+
+{
+    "name": "Caracoles",
+    "number": "1234567"
+}
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Rosco de naranja"
+}
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Ada Lovelace",
+    "number": "123456"
+}
+
+###
+DELETE http://localhost:3001/api/persons/535363
