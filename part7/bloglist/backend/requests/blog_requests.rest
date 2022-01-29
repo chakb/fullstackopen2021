@@ -1,0 +1,42 @@
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2MWRmNmVkZjRjMjRkNDRkY2M1YzY5YjIiLCJpYXQiOjE2NDIwMzI4ODQsImV4cCI6MTY0MjAzNjQ4NH0.YEbmT9vJW0qjDCHkUNI-rBWb9cQULUIg1-XePrB1KR8
+
+{
+    "title": "Caracoles usando REST client en vscode",
+    "author": "El Caracol bloguero",
+    "url": "http://www.elcaracolbloguero.caracol",
+    "likes": 17
+}
+
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2MWRmNmVkZjRjMjRkNDRkY2M1YzY5YjIiLCJpYXQiOjE2NDIwMzI4ODQsImV4cCI6MTY0MjAzNjQ4NH0.YEbmT9vJW0qjDCHkUNI-rBWb9cQULUIg1-XePrB1KR8
+
+{
+    "title": "Tapablog",
+    "author": "Los taperos",
+    "url": "http://latapadera.tapa",
+    "likes": 936
+}
+
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+    "title": "Go To Statement Considered Harmful",
+    "author": "Edsger W. Dijkstra",
+    "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+    "likes": 5
+}
+
+###
+DELETE http://localhost:3003/api/blogs/61df6f124c24d44dcc5c69bd
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2MWRmNmVkZjRjMjRkNDRkY2M1YzY5YjIiLCJpYXQiOjE2NDIwMzI4ODQsImV4cCI6MTY0MjAzNjQ4NH0.YEbmT9vJW0qjDCHkUNI-rBWb9cQULUIg1-XePrB1KR8
+
+###
+DELETE http://localhost:3003/api/blogs/61df3660faea203cb48641fa
+Authorization: bearer 
