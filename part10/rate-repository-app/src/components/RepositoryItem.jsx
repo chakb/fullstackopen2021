@@ -1,4 +1,6 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
+import * as Linking from 'expo-linking';
+
 import theme from "../theme";
 import Text from "./Text";
 import StatBlock from "./StatBlock";
@@ -34,21 +36,29 @@ const styles = StyleSheet.create({
   },
   repoInfo: {
     flexDirection: 'row',
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.white,
+    padding: 20,
+    marginTop: 20,
+    borderRadius: 5,
+    textAlign: 'center'
   }
 })
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showGithubButton }) => {
 
   const kCalculator = (number) => {
     if (number >= 1000) {
-      return `${Math.round(number / 100)/10}k`
+      return `${Math.round(number / 100) / 10}k`
     } else {
       return number
     }
   }
 
   return (
-    <View style={styles.item}>
+    <View testID='repositoryItem' style={styles.item}>
       <View style={styles.repoInfo}>
         <Image style={styles.avatar} source={{ uri: `${item.ownerAvatarUrl}` }} />
         <View>
@@ -65,6 +75,11 @@ const RepositoryItem = ({ item }) => {
         <StatBlock quantity={item.reviewCount} category={'Reviews'} />
         <StatBlock quantity={item.ratingAverage} category={'Rating'} />
       </View>
+      {showGithubButton &&
+        <Pressable onPress={() => Linking.openURL(item.url)} >
+          <Text style={styles.button} fontWeight='bold' fontSize='subheading'>Open in GitHub</Text>
+        </Pressable>
+      }
     </View>
   )
 }

@@ -1,8 +1,7 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import AppBarTab from './AppBarTab';
-import { ScrollView } from 'react-native-web';
 
 import { useQuery } from '@apollo/client';
 import { AUTHENTICATED_USER } from '../graphql/queries';
@@ -27,8 +26,15 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab linkTo={'/'} text={'Repositories'} />
         {data?.me
-          ? <AppBarTab linkTo={'/'} text={'Sign out'} onPress={signOut} />
-          : <AppBarTab linkTo={'/signin'} text={'Sign in'} />
+          ? <>
+            <AppBarTab linkTo={'/review'} text={'Create a review'} />
+            <AppBarTab linkTo={'/myreviews'} text={'My reviews'} />
+            <AppBarTab linkTo={'/'} text={'Sign out'} onPress={signOut} />
+          </>
+          : <>
+            <AppBarTab linkTo={'/signin'} text={'Sign in'} />
+            <AppBarTab linkTo={'/signup'} text={'Sign up'} />
+          </>
         }
       </ScrollView>
     </View>
